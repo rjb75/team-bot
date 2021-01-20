@@ -6,7 +6,7 @@ const bot = new Discord.Client();
 const TOKEN = process.env.TOKEN;
 
 bot.on("ready", () => {
-  console.info("Logged in as {bot.user.tag}!");
+  console.info("Teams Bot has started and logged in sucessfully!");
 });
 
 bot.login(TOKEN);
