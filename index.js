@@ -13,10 +13,6 @@ bot.login(TOKEN);
 
 //Command prefix
 const prefix = "!"
-const team_number = 69;
-const Name = "Samson";
-const discordName = "Samson#9999";
-const email = "samson@spaghetti.com";
 
 bot.on('message', message => {
 	if (message.content === '!teams') {
