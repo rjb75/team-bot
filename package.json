@@ -1,0 +1,23 @@
+{
+  "name": "team-bot",
+  "version": "1.0.0",
+  "description": "A discord bot for team selection and assignment with discord.js",
+  "main": "index.js",
+  "scripts": {
+    "run": "node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rjb75/team-bot.git"
+  },
+  "author": "Robert Brown, Samson Hua",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rjb75/team-bot/issues"
+  },
+  "homepage": "https://github.com/rjb75/team-bot#readme",
+  "dependencies": {
+    "discord.js": "^12.5.1",
+    "dotenv": "^8.2.0"
+  }
+}
