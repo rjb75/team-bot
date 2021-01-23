@@ -11,9 +11,35 @@ bot.on("ready", () => {
 
 bot.login(TOKEN);
 
+//Google Sheets API
+
+const { GoogleSpreadsheet } = require('google-spreadsheet');
+const creds = require('./client-secret.json');
+
+// spreadsheet key is the long id in the sheets URL
+const doc = new GoogleSpreadsheet('1hoTYv-70ggXe0ucVpecz0zr_Sq9ahxcFYC8dvAq3cYY');
+
+async function accessSpreadsheet() {
+  await doc.useServiceAccountAuth({
+    client_email: creds.client_email,
+    private_key: creds.private_key,
+  });
+
+  await doc.loadInfo(); // loads document properties and worksheets
+  console.log(doc.title);
+
+  const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id]
+  console.log(sheet.title);
+  console.log(sheet.rowCount);
+
+}
+
+accessSpreadsheet();
+
 //Command prefix
 const prefix = "!"
 
+//Random Commands that Samson has done
 bot.on('message', message => {
 	if (message.content === '!teams') {
 
@@ -63,7 +89,6 @@ function createEmbed(Team){
   return teamMemberEmbed;
 
 }
-
 
 //Team Class Code
 class User {
