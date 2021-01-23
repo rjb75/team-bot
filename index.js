@@ -16,6 +16,7 @@ bot.login(TOKEN);
 //=============================
 
 bot.on("ready", () => {
+  bot.user.setUsername("HYL Bot | [BETA]");
   console.info(`Logged in as ${bot.user.tag}!`);
   bot.user.setActivity("on node.js", {type: "PLAYING"});
 });
@@ -87,7 +88,7 @@ async function verifyUser(verificationCode){
   if(userData){
     return [userData.FirstName, userData.LastName, userData.Email, userData.SignedIn, userData.TeamNumber] //Retrieves multiple value and stores them in array
   }else{
-    return ["Nothing"]
+    return ["Nothing"] //Returns an array of 1, having some bug issues lol
   }
 }
 
@@ -203,13 +204,8 @@ bot.on('message', message => {
 
   let guild = message.guild; //Reference guild as message.guild
 
-  if (!message.content.startsWith(prefix) || message.author.bot) { //This code checks to see if any text has the command prefix !
-
-    if(message.channel.id === VerificationChannelId){ //We don't want any spam in the verification channel (since commands go there) so delete anything that isn't a command aka !something
-      message.delete();
-      return
-    }
-    return //If it doesn't have a verification command don't !
+  if (!message.content.startsWith(prefix) || message.author.bot) { //This code checks to see if any text has the command prefix or if it is a bot triggering the command
+    return //If it doesn't have a ! don't try to process it
   } 
 
   //Argument and command handler, for example "!dab @Samson", the command would be "dab" and argument would be "@Samson"
@@ -267,11 +263,12 @@ bot.on('message', message => {
           if (role) message.guild.members.cache.get(message.author.id).roles.add(role); //Adds the verified role in
           message.author.send(`Thank you ${firstName}, you are now verified on the Hack Your Learning Discord! \n \n===`); 
 
-          //Check to see if they have a team in the first place, if teamNumber is empty, remove their Unverified Status, verify them but don't assign team
+          //**Check to see if they have a team in the first place, if teamNumber is empty, remove their Unverified Status, verify them but don't assign team role**
+          //===================================================================================================================================================
           if(!teamNumber){ 
             let Unverified = message.member.guild.roles.cache.find(role => role.name === 'Unverified');
             message.guild.members.cache.get(message.author.id).roles.remove(Unverified); //Removes Unverified and Verifies them
-            return message.channel.send(`${message.author} has been verified! Welcome to the Hack Your Learning Discord :smile: \n \n===`);
+            return message.channel.send(`${message.author} has been verified! Welcome to the Hack Your Learning Discord :smile: \n \n===`); //exit loop and allow them access
           }
           //Check to see whether a role already exists and if not create one using the checkRole() function
           checkRole(teamNumber, message, guild); 
@@ -282,16 +279,13 @@ bot.on('message', message => {
 
       }else{
         //This is the return error when a verification code has already been used
-        return message.channel.send(`Verification code has already been used ${message.author}. Please contact an administrator for help.\n\n===`);
-      }
-
-        
+            return message.channel.send(`Verification code has already been used ${message.author}. Please contact an administrator for help.\n\n===`);
+          }        
       }else{
         //This is the return error when a verification code is invalid
         return message.channel.send(`Verification Code Invalid ${message.author}, please try again or contact an administrator. \n \n===`); //Rejection
       }
    })
-  
    //Delete all !verify commands when they are entered as to not spam the #verification channel
   message.delete();
 }else{
