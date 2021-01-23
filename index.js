@@ -21,7 +21,7 @@ bot.on("ready", () => {
 });
 
 //=============================
-//When a member joins, add "Looking For Team" and "Unverified" Roles
+//When a member joins, add "Looking For Team" and "Unverified" Roles, the server should already have a "looking for team and unverified role"
 //=============================
 bot.on('guildMemberAdd', member => {
   
